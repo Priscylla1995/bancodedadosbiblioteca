@@ -1,0 +1,255 @@
+
+/* Cria o banco de dados "biblioteca", se não existir o BD, com definições com permitem a utilização de acentos e símbolos ("character set utf8mb4")
+e a comparação entre caracteres acentuados e que não diferenciam maiúsculas e minúsculas ("utf8mb4_0900_ai_ci") */
+
+CREATE DATABASE IF NOT EXISTS biblioteca
+CHARACTER SET utf8mb4
+COLLATE utf8mb4_0900_ai_ci;
+
+/* Usa a biblioteca */
+
+USE biblioteca;
+
+
+/* Criando tabela de livros e suas informações */
+
+CREATE TABLE Livros (
+    id_livro INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    id_categoria INT NOT NULL,
+    id_autor INT NOT NULL,
+    titulo VARCHAR(255) NOT NULL,
+    ano_publicacao DATE NOT NULL,
+    num_exemplares INT NOT NULL,
+    FOREIGN KEY (id_categoria) REFERENCES Categorias(id_categoria),
+    FOREIGN KEY (id_autor) REFERENCES Autores(id_autor)
+);
+
+/* Inserindo dados dos livros */
+
+INSERT INTO Livros (id_categoria, id_autor, titulo, ano_publicacao, num_exemplares)
+VALUES 
+('1', '1', 'Aventuras de Fantasia', '2020-05-15', '50'),
+('2', '2', 'História Científica', '2019-08-20', '45'),
+('3', '3', 'Romance Contemporâneo', '2018-12-10', '60'),
+('4',' 4', 'Mistério e Suspense', '2017-03-25', '55'),
+('5', '5', 'Biografia de um Cientista', '2016-06-05', '40'),
+('6', '6', 'Romance de Época', '2015-09-30', '48'),
+('7',' 7', 'História Medieval', '2014-11-18', '42'),
+('8', '8', 'Aventuras no Espaço', '2013-07-22', '53'),
+('9', '9', 'Romance de Época', '2012-02-12', '58'),
+('10', '10', 'Aventuras no Mar', '2011-04-06', '47'),
+('11', '11', 'Suspense Psicológico', '2010-08-28',' 35'),
+('12', '12', 'Biografia de um Político', '2009-12-03', '52'),
+('13', '13', 'Mistério no Convento', '2008-05-17', '44'),
+('1', '14', 'Aventuras no Deserto', '2007-09-09', '41'),
+('2', '15', 'História Antiga', '2006-02-21','49'),
+('3',' 16', 'Mistério nas Montanhas', '2005-07-11', '46'),
+('4', '17', 'Ficção Científica Avançada', '2004-10-30', '37'),
+('6', '19', 'Romance Histórico', '2002-08-14', '39'),
+('7', '20', 'História Medieval', '2001-04-02', '54'),
+('8', '21', 'Fantasia Épica', '2000-06-08', '59'),
+('9', '22', 'Autoajuda', '1999-09-23', '37'),
+('10', '23', 'Política e Sociedade', '1998-11-07', '51'),
+('11', '24', 'Suspense Psicológico', '1997-02-14', '56'),
+('12', '25', 'Biografia de um Artista', '1996-04-29', '43'),
+('13', '26', 'Mistério Policial', '1995-08-12', '50'),
+('1', '27', 'Aventuras no Céu', '1994-10-17', '38'),
+('2', '28', 'História da Tecnologia', '1993-12-05', '49'),
+('3', '29', 'Mistério no Convento', '1992-09-11', '47'),
+('4', '30', 'Ficção Científica Avançada', '1991-06-26','55'),
+('14', '31', 'Pesadelos na Escuridão', '1990-04-13', '40'),
+('14', '32', 'A Casa Assombrada', '1989-07-28', '45'),
+('14', '33' 'O Enigma do Cemitério', '1988-10-05', '38'),
+('14', '34', 'Pesadelos Noturnos', '1987-02-18', '42'),
+('14', '35', 'O Espírito na Mansão', '1986-05-09', '49');
+
+
+/* Criando tabela de categorias */
+
+CREATE TABLE Categorias (
+    id_categoria INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    nome_categoria VARCHAR(100) NOT NULL
+);
+
+/* Inserindo dados das categorias */
+
+INSERT INTO Categorias (id_categoria, nome_categoria)
+VALUES 
+('1', 'Aventura'),
+('2', 'História'),
+('3', 'Mistério'),
+('4', 'Ficção Científica'),
+('5', 'Biografia'),
+('6', 'Romance'),
+('7', 'História Antiga'),
+('8', 'Fantasia Épica'),
+('9', 'Autoajuda'),
+('10', 'Política'),
+('11', 'Suspense'),
+('12', 'Arte'),
+('13', 'Mistério Policial'),
+('14', 'Terror');
+
+/* Criando tabela de Autores */
+
+CREATE TABLE Autores (
+    id_autor INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    id_livro INT NOT NULL UNIQUE,
+    nome_autor VARCHAR(100) NOT NULL,
+    FOREIGN KEY (id_livro) REFERENCES Livros(id_livro)
+);
+
+/* Inserindo dados dos Autores, linkando com o id dos livros */
+
+INSERT INTO Autores (id_livro, nome_autor)
+VALUES
+('1', 'John Smith'),
+('2', 'Emily Johnson'),
+('3', 'David Brown'),
+('4', 'Jennifer Lee'),
+('5', 'Michael Taylor'),
+('6', 'Sarah Clark'),
+('7', 'Robert Anderson'),
+('8', 'Jessica White'),
+('9', 'William Davis'),
+('10', 'Elizabeth Moore'),
+('11', 'James Wilson'),
+('12', 'Linda Parker'),
+('13', 'Charles King'),
+('14', 'Susan Evans'),
+('15', 'Richard Turner'),
+('16', 'Mary Harris'),
+('17', 'Thomas Allen'),
+('18', 'Karen Martin'),
+('19', 'Daniel Wright'),
+('20', 'Laura Young'),
+('21', 'Joseph Jackson'),
+('22', 'Catherine Lewis'),
+('23', 'Christopher Green'),
+('24', 'Patricia Brown'),
+('25', 'Matthew Turner'),
+('26', 'Barbara Hall'),
+('27', 'Daniel Adams'),
+('28', 'Nancy Taylor'),
+('29', 'Anthony Scott'),
+('30', 'Lisa Wilson'),
+('31', 'Andrew White'),
+('32', 'Margaret Davis'),
+('33', 'Kevin Johnson'),
+('34', 'Deborah Smith');
+
+/* Criando tabela membro */
+
+CREATE TABLE IF NOT EXISTS membro (
+  id_membro INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  nome VARCHAR(255) NOT NULL,
+  cpf DECIMAL(11) UNIQUE NOT NULL,
+  telefone VARCHAR(15) NOT NULL,
+  endereco VARCHAR(255) NOT NULL,
+  
+);
+
+/* Inserindo os membros */
+
+INSERT INTO membro (id_membro, nome, cpf, telefone, endereco) 
+VALUES
+('1', Anderson Alvez de Paula', 77887993008, '41988441122', 'R. Chile, 1678 - Rebouças, Curitiba - PR, 80220-181');
+('2', Maicon Rafael Correa', 40802043020, '41988441132', 'R. Itupava, 985 - Hugo Lange, Curitiba - PR, 80040-455');
+('3', Priscylla de Almeida', 15756751025, '41988441199', 'R. Itupava, 828 - Alto da XV, Curitiba - PR, 80045-330');
+('4', Amilto Jandre', 96876211096, '41988441199', 'R. Sete de Abril, 835 - Loja 01 - Alto da XV, Curitiba - PR, 80045-165');
+('5', Cristiane da Silva', 60153579080, '41988441777', 'R. Riachuelo, 274 - Centro, Curitiba - PR, 80020-250');
+
+/* Criando tabela emprestimo */
+
+CREATE TABLE IF NOT EXISTS emprestimo (
+  id_emprestimo INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  membro_id INT NOT NULL,
+  livro_id INT NOT NULL,
+  data_emprestimo DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP(),
+  data_devolucao_prevista DATETIME NOT NULL DEFAULT (CURRENT_TIMESTAMP() + INTERVAL 14 DAY),
+  data_devolucao_real DATETIME, 
+  FOREIGN KEY (membro_id) REFERENCES membro(id_membro),
+  FOREIGN KEY (livro_id) REFERENCES Livros(id_livro) 
+);
+
+/* Inserindo os empretismos */
+
+INSERT INTO emprestimo (membro_id, livro_id)
+VALUES
+(2, 3);
+
+INSERT INTO emprestimo (membro_id, livro_id, data_devolucao_real)
+VALUES
+(2, 3, '2023-10-11');
+
+INSERT INTO emprestimo (membro_id, livro_id)
+VALUES
+(1, 2);
+
+INSERT INTO emprestimo (membro_id, id_livro, data_devolucao_real)
+VALUES
+(1, 2, '2023-09-12');
+
+INSERT INTO emprestimo (membro_id, livro_id)
+VALUES
+(3, 1);
+
+INSERT INTO emprestimo (membro_id, livro_id, data_devolucao_real)
+VALUES
+(3, 1, '2023-07-01');
+
+INSERT INTO emprestimo (membro_id, livro_id)
+VALUES
+(4, 35);
+
+INSERT INTO emprestimo (membro_id, livro_id, data_devolucao_real)
+VALUES
+(4, 35, '2023-05-10');
+
+INSERT INTO emprestimo (membro_id, livro_id)
+VALUES
+(5, 20);
+
+INSERT INTO emprestimo (membro_id, livro_id, data_devolucao_real)
+VALUES
+(5, 20, '2023-11-08');
+
+/* Listar todos os autores cujo nome inicia com a letra ‘A’. */
+
+SELECT * FROM Autores WHERE nome_autor LIKE 'A%';
+
+/* Listar todos os livros cujo título contenha a palavra ‘sistema’. */
+
+SELECT * FROM Livros WHERE titulo LIKE '%sistema%';
+
+/* Listar a chave primária e o título dos livros que foram publicados há mais de 5 anos. */
+
+SELECT id_livro, titulo FROM Livros WHERE ano_publicacao < YEAR(CURDATE()) - 5;
+
+/* Listar, em ordem alfabética por título, os livros que possuem menos de 5 exemplares disponíveis.*/
+
+SELECT * FROM Livros WHERE num_exemplares < 5 ORDER BY titulo;
+
+/* Listar todos os livros que nunca foram emprestados. */
+
+SELECT * FROM Livros WHERE id NOT IN (SELECT DISTINCT livro_id FROM emprestimo);
+
+/* Mudar a data de devolução real de todos os empréstimos para a data atual .*/
+
+UPDATE emprestimo SET data_devolucao_real = CURDATE();
+
+/* Postergar em um mês a data de devolução prevista de todos os empréstimos. */
+
+UPDATE emprestimo SET data_devolucao_prevista = DATE_ADD(data_devolucao_prevista, INTERVAL 1 MONTH);
+
+/* Excluir todos os membros que nunca fizeram empréstimo. */
+
+DELETE FROM membro WHERE id NOT IN (SELECT DISTINCT membro_id FROM emprestimo);
+
+/* Excluir todas as categorias que não aparecem em nenhum livro. */
+
+DELETE FROM Categorias WHERE id NOT IN (SELECT DISTINCT id_categoria FROM Livros);
+
+
+
+
